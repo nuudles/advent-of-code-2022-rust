@@ -54,19 +54,16 @@ pub fn part1(input: String) {
         }
     }
     let mut sizes = HashMap::<Vec<String>, usize>::new();
-    for directory in contents.keys().sorted_by_key(|d| d.len()).rev() {
-        let mut size = 0;
-        for entry in contents
-            .get(directory)
-            .expect("Directory entries not found")
-        {
-            match entry {
+    for (directory, entries) in contents.iter().sorted_by_key(|(d, _)| d.len()).rev() {
+        let size = entries
+            .iter()
+            .map(|e| match e {
                 Entry::Directory(sub_dir) => {
-                    size += sizes.get(sub_dir).expect("Subdirectory size not found")
+                    sizes.get(sub_dir).expect("Subdirectory size not found")
                 }
-                Entry::File(file_size) => size += file_size,
-            }
-        }
+                Entry::File(file_size) => file_size,
+            })
+            .sum::<usize>();
         sizes.insert(directory.clone(), size);
     }
 
