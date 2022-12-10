@@ -28,13 +28,8 @@ pub fn part1(input: String) {
             if t.neighbors_with_diagonals().contains(&h) || t == h {
                 continue;
             }
-            if t.x == h.x || t.y == h.y {
-                t.x = (t.x + h.x) / 2;
-                t.y = (t.y + h.y) / 2;
-            } else {
-                t.x = t.x + if t.x < h.x { 1 } else { -1 };
-                t.y = t.y + if t.y < h.y { 1 } else { -1 };
-            }
+            t.x = t.x + (h.x - t.x).signum();
+            t.y = t.y + (h.y - t.y).signum();
             seen.insert(t);
         }
     }
@@ -68,13 +63,8 @@ pub fn part2(input: String) {
                 if t.neighbors_with_diagonals().contains(&h) || t == h {
                     continue;
                 }
-                if t.x == h.x || t.y == h.y {
-                    t.x = (t.x + h.x) / 2;
-                    t.y = (t.y + h.y) / 2;
-                } else {
-                    t.x = t.x + if t.x < h.x { 1 } else { -1 };
-                    t.y = t.y + if t.y < h.y { 1 } else { -1 };
-                }
+                t.x = t.x + (h.x - t.x).signum();
+                t.y = t.y + (h.y - t.y).signum();
                 knots[i] = t;
             }
             seen.insert(knots[9]);
